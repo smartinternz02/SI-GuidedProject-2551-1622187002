@@ -1,0 +1,276 @@
+﻿<process name="HR Payroll Automation" version="1.0" bpversion="6.10.1.35171" narrative="" byrefcollection="true" preferredid="243c8d22-903b-4639-9343-acc8c0aa1e5c" published="true">
+  <view>
+    <camerax>95</camerax>
+    <cameray>4</cameray>
+    <zoom version="2">1.25</zoom>
+  </view>
+  <preconditions />
+  <endpoint narrative="" />
+  <stage stageid="c9f0294e-c330-4046-a6c9-6238a4c7c7af" name="Start" type="Start">
+    <display x="-135" y="-270" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <inputs>
+      <input type="text" name="Enter the file path(File path should not consisit spaces):" narrative="File path of the Excel file to be entered" stage="File path" />
+    </inputs>
+    <onsuccess>cf67bf7b-5702-44c4-aada-28d9c847ce9c</onsuccess>
+  </stage>
+  <stage stageid="1474570e-af1c-4e38-8b65-9dfb5725c734" name="End" type="End">
+    <display x="330" y="270" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+  </stage>
+  <stage stageid="2bcfbb87-f963-4715-94ff-cbf3dd659918" name="Stage1" type="ProcessInfo">
+    <display x="225" y="-195" w="150" h="90" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+  </stage>
+  <stage stageid="522a5461-cfd8-44e7-930a-41b8fdbc25c8" name="MS Excel VBO::Create Instance" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-135" y="-150" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <inputs>
+      <input type="flag" name="Enable Events" friendlyname="Enable Events" narrative="Flag to indicate that events should be enabled / disabled on the attached instance - defaulted to True" expr="" />
+    </inputs>
+    <outputs>
+      <output type="number" name="handle" friendlyname="handle" narrative="An integer which can be used to identify the created instance in subsequent actions" stage="handle" />
+    </outputs>
+    <onsuccess>347c56e1-c965-42d4-be7c-437b82b5d5ad</onsuccess>
+    <resource object="MS Excel VBO" action="Create Instance" />
+  </stage>
+  <stage stageid="51d4943a-6352-48ba-b212-79416b254999" name="handle" type="Data">
+    <display x="615" y="-225" w="90" h="60" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <datatype>number</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="e7d2e5c0-fb74-4898-9a0e-dc5dfb08125d" name="Workbook Name" type="Data">
+    <display x="615" y="-150" w="90" h="60" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="711e4e58-8756-44ef-85c7-e350084dd804" name="Data" type="Collection">
+    <display x="615" y="-75" w="120" h="60" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <datatype>collection</datatype>
+    <private />
+    <alwaysinit />
+    <collectioninfo>
+      <field name="Employee_ID" type="text" />
+      <field name="Employee_Name" type="text" />
+      <field name="Pay_Period" type="number" />
+      <field name="Working_Hours" type="number" />
+      <field name="Working_Hours_Rate(30/hr)" type="number" />
+      <field name="Gross_pay" type="number" />
+      <field name="Income_Tax" type="number" />
+      <field name="Insurance_Deduction" type="number" />
+      <field name="Total_Deduction" type="number" />
+      <field name="Net_Pay($)" type="number" />
+      <field name="Over_Time_Hours " type="number" />
+      <field name="Over_Time_Hours_Rate(45/hr)" type="number" />
+    </collectioninfo>
+  </stage>
+  <stage stageid="b55eb213-4416-4f86-a077-8fe3a64e1a65" name="Loop Start " type="LoopStart">
+    <loginhibit onsuccess="true" />
+    <display x="-135" y="30" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <onsuccess>03ae440b-e0fa-4aa7-a485-545bece0cabf</onsuccess>
+    <groupid>f6773a24-f08b-4b94-b092-c4b028502d07</groupid>
+    <looptype>ForEach</looptype>
+    <loopdata>Data</loopdata>
+  </stage>
+  <stage stageid="29de8226-9578-4d28-bec1-377cd18cbb9b" name="Loop End" type="LoopEnd">
+    <loginhibit onsuccess="true" />
+    <display x="-135" y="150" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <onsuccess>6b628e62-721e-47b3-a061-911c2a8fe569</onsuccess>
+    <groupid>f6773a24-f08b-4b94-b092-c4b028502d07</groupid>
+  </stage>
+  <stage stageid="03ae440b-e0fa-4aa7-a485-545bece0cabf" name="Pay Calculation" type="MultipleCalculation">
+    <loginhibit onsuccess="true" />
+    <display x="-135" y="90" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <onsuccess>29de8226-9578-4d28-bec1-377cd18cbb9b</onsuccess>
+    <steps>
+      <calculation expression="[Data.Working_Hours] * 30" stage="Data.Working_Hours_Rate(30/hr)" />
+      <calculation expression="[Data.Over_Time_Hours ] * 45" stage="Data.Over_Time_Hours_Rate(45/hr)" />
+      <calculation expression="([Data.Working_Hours]*30)+([Data.Over_Time_Hours ]*45)" stage="Data.Gross_pay" />
+      <calculation expression="[Data.Gross_pay] * 0.15" stage="Data.Income_Tax" />
+      <calculation expression="[Data.Gross_pay] * 0.03" stage="Data.Insurance_Deduction" />
+      <calculation expression="[Data.Income_Tax]+[Data.Insurance_Deduction]" stage="Data.Total_Deduction" />
+      <calculation expression="[Data.Gross_pay]-[Data.Total_Deduction]" stage="Data.Net_Pay($)" />
+    </steps>
+  </stage>
+  <stage stageid="347c56e1-c965-42d4-be7c-437b82b5d5ad" name="MS Excel VBO::Open Workbook" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-135" y="-90" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <inputs>
+      <input type="number" name="handle" friendlyname="handle" narrative="The integer handle identifying the instance on which the required workbook should be opened. The default of zero indicates the currently active instance." expr="[handle]" />
+      <input type="text" name="File name" friendlyname="File name" narrative="The path and name of the file which should be opened." expr="[File path]" />
+    </inputs>
+    <outputs>
+      <output type="text" name="Workbook Name" friendlyname="Workbook Name" narrative="The name used by Excel to identify the workbook - usually this is the file name (without the path)." stage="Workbook Name" />
+    </outputs>
+    <onsuccess>90b479d3-b062-4622-9872-40d9e51fd0b0</onsuccess>
+    <resource object="MS Excel VBO" action="Open Workbook" />
+  </stage>
+  <stage stageid="90b479d3-b062-4622-9872-40d9e51fd0b0" name="MS Excel VBO::Get Worksheet As Collection" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-135" y="-30" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <inputs>
+      <input type="number" name="handle" friendlyname="handle" narrative="The integer handle identifying the instance on which the worksheet which should be retrieved resides. The default of zero indicates the currently active instance." expr="[handle]" />
+      <input type="text" name="Workbook Name" friendlyname="Workbook Name" narrative="The name of the workbook which contains the sheet required. The default empty text indicates the currently active workbook on the specified instance." expr="[Workbook Name]" />
+      <input type="text" name="Worksheet Name" friendlyname="Worksheet Name" narrative="The name of the worksheet within the specified workbook which should be written to a collection. The default empty text indicates the currently active worksheet within the specified workbook." expr="&quot;Sheet1&quot;" />
+      <input type="text" name="Fetch Data With Method" friendlyname="Fetch Data With Method" narrative="The method used to fetch data from cells in the worksheet. Options include Text, Value, and Value2. The default indicates Value will be used." expr="" />
+    </inputs>
+    <outputs>
+      <output type="collection" name="Data" friendlyname="Data" narrative="The collection containing the data from the specified worksheet - the column IDs will be gleaned from the first row on the sheet being retrieved." stage="Data" />
+    </outputs>
+    <onsuccess>b55eb213-4416-4f86-a077-8fe3a64e1a65</onsuccess>
+    <resource object="MS Excel VBO" action="Get Worksheet As Collection" />
+  </stage>
+  <stage stageid="14f93d26-62d2-4812-b57f-0cf857dc3ea6" name="MS Excel VBO::Write Collection" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-135" y="270" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <inputs>
+      <input type="number" name="handle" friendlyname="handle" narrative="The integer handle identifying the instance on which the specified collection should be written. The default of zero indicates the currently active instance." expr="[handle]" />
+      <input type="text" name="Workbook Name" friendlyname="Workbook Name" narrative="The name of the workbook within which the data should be written. The default empty value indicates the current workbook within the specified instance." expr="[Workbook Name]" />
+      <input type="collection" name="Collection" friendlyname="Collection" narrative="The collection containing the data which should be written to the worksheet." expr="[Data]" />
+      <input type="text" name="Worksheet Name" friendlyname="Worksheet Name" narrative="The name of the worksheet on which the given data should be written. The default empty value indicates the current sheet within the specified workbook." expr="&quot;Sheet2&quot;" />
+      <input type="text" name="Cell Reference" friendlyname="Cell Reference" narrative="The reference at which the collection should be written." expr="&quot;A1&quot;" />
+      <input type="flag" name="Include Column Names" friendlyname="Include Column Names" narrative="True to indicate that the column names from the collection should be written out as the first row; False to ignore the column names and just write out the data." expr="True" />
+    </inputs>
+    <onsuccess>f89c4b43-9499-4362-84ae-f7401267cb1b</onsuccess>
+    <resource object="MS Excel VBO" action="Write Collection" />
+  </stage>
+  <stage stageid="f89c4b43-9499-4362-84ae-f7401267cb1b" name="MS Excel VBO::Save Workbook" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-45" y="270" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <inputs>
+      <input type="number" name="handle" friendlyname="handle" narrative="The integer handle identifying the instance on which the workbook which should be saved resides. The default of zero indicates the currently active instance." expr="[handle]" />
+      <input type="text" name="Workbook Name" friendlyname="Workbook Name" narrative="The name of the workbook which should be saved" expr="[Workbook Name]" />
+    </inputs>
+    <onsuccess>36c4a5df-43bc-40bf-a664-f96d0fc6069a</onsuccess>
+    <resource object="MS Excel VBO" action="Save Workbook" />
+  </stage>
+  <stage stageid="85765c38-f9e4-4db0-84bd-84cdbfafc229" name="Payroll Automation Object::Excel Launch" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="135" y="270" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <inputs>
+      <input type="text" name="File path" friendlyname="File path" expr="[File path]" />
+    </inputs>
+    <onsuccess>d9ae8a4b-267e-495c-83c2-50acaf7a8a78</onsuccess>
+    <resource object="Payroll Automation Object" action="Excel Launch" />
+  </stage>
+  <stage stageid="36c4a5df-43bc-40bf-a664-f96d0fc6069a" name="MS Excel VBO::Close Instance" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="45" y="270" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <inputs>
+      <input type="number" name="handle" friendlyname="handle" narrative="The integer handle identifying the instance to be closed. Zero indicates the currently active instance." expr="[handle]" />
+      <input type="flag" name="Save Changes" friendlyname="Save Changes" narrative="True to save the changes to the open workbooks on the instance, False to discard any changes. Default is False." expr="True" />
+    </inputs>
+    <onsuccess>85765c38-f9e4-4db0-84bd-84cdbfafc229</onsuccess>
+    <resource object="MS Excel VBO" action="Close Instance" />
+  </stage>
+  <stage stageid="ea990aeb-1180-4bb3-aca1-2a7eaad051be" name="File path" type="Data">
+    <loginhibit onsuccess="true" />
+    <display x="615" y="0" w="120" h="60" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">C:\Users\shrav\OneDrive\Desktop\Final_Sample_Hr_payroll_Excel.xlsx</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="0d41fda6-6f66-47a3-a1da-0a095cb76176" name="Recover1" type="Recover">
+    <loginhibit />
+    <display x="165" y="15" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <onsuccess>32efcb2f-78b0-4dde-91b5-d28b5364cbce</onsuccess>
+  </stage>
+  <stage stageid="f7740fc4-153f-4945-9ba9-18a3171c1876" name="Resume1" type="Resume">
+    <loginhibit />
+    <display x="165" y="135" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <onsuccess>bf92c14f-2b4e-44e7-a551-181e3adb6725</onsuccess>
+  </stage>
+  <stage stageid="cf67bf7b-5702-44c4-aada-28d9c847ce9c" name="Decision1" type="Decision">
+    <display x="-135" y="-210" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <decision expression="0&lt;InStr([File path], &quot; &quot;) AND InStr([File path], &quot; &quot;)&lt;Len([File path])" />
+    <ontrue>a8f9a946-6c62-4825-aebb-1f365c0ec150</ontrue>
+    <onfalse>522a5461-cfd8-44e7-930a-41b8fdbc25c8</onfalse>
+  </stage>
+  <stage stageid="a8f9a946-6c62-4825-aebb-1f365c0ec150" name="Exception1" type="Exception">
+    <display x="-45" y="-210" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <exception localized="yes" type="System Exception" detail="&quot;File path contains space! Hence could not execute&quot;" />
+  </stage>
+  <stage stageid="422bddb6-ac38-49ca-9926-227cb0d6e09a" name="End1" type="End">
+    <loginhibit onsuccess="true" />
+    <display x="330" y="135" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+  </stage>
+  <stage stageid="7ccf686c-2f09-4e58-9b23-bec3fc3b48fd" name="Exception Value" type="Data">
+    <loginhibit onsuccess="true" />
+    <display x="615" y="75" w="90" h="60" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <datatype>text</datatype>
+    <initialvalue xml:space="preserve">"File path contains space! Hence could not execute"</initialvalue>
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="32efcb2f-78b0-4dde-91b5-d28b5364cbce" name="Calc1" type="Calculation">
+    <loginhibit onsuccess="true" />
+    <display x="165" y="75" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <onsuccess>f7740fc4-153f-4945-9ba9-18a3171c1876</onsuccess>
+    <calculation expression="ExceptionDetail()" stage="Exception Detail" />
+  </stage>
+  <stage stageid="bf5bcb7e-500b-4a54-a93c-c19078a225f6" name="Exception Detail" type="Data">
+    <display x="315" y="75" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+  <stage stageid="bf92c14f-2b4e-44e7-a551-181e3adb6725" name="Alert2" type="Alert">
+    <loginhibit onsuccess="true" />
+    <display x="240" y="135" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <onsuccess>422bddb6-ac38-49ca-9926-227cb0d6e09a</onsuccess>
+    <alert expression="&quot;Exception&quot;" />
+  </stage>
+  <stage stageid="6b628e62-721e-47b3-a061-911c2a8fe569" name="MS Excel VBO::Create Worksheet" type="Action">
+    <loginhibit onsuccess="true" />
+    <display x="-135" y="210" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <inputs>
+      <input type="number" name="handle" friendlyname="handle" narrative="The integer handle identifying the instance on which the worksheet should be created. The default of zero indicates the currently active instance." expr="[handle]" />
+      <input type="text" name="Workbook Name" friendlyname="Workbook Name" narrative="The name of the workbook in which the sheet should be created - The default empty value indicates the currently active workbook on the specified instance." expr="[Workbook Name]" />
+      <input type="text" name="Worksheet Name" friendlyname="Worksheet Name" narrative="The name of the sheet which should be activated. The default empty text value indicates that the currently active sheet should be, er, activated, making this a no-op." expr="&quot;Sheet2&quot;" />
+    </inputs>
+    <onsuccess>14f93d26-62d2-4812-b57f-0cf857dc3ea6</onsuccess>
+    <resource object="MS Excel VBO" action="Create Worksheet" />
+  </stage>
+  <stage stageid="d9ae8a4b-267e-495c-83c2-50acaf7a8a78" name="Alert1" type="Alert">
+    <loginhibit onsuccess="true" />
+    <display x="240" y="270" />
+    <font family="Segoe UI" size="14" style="Regular" color="000000" />
+    <onsuccess>1474570e-af1c-4e38-8b65-9dfb5725c734</onsuccess>
+    <alert expression="&quot;Process excecuted successfully!!!&quot;" />
+  </stage>
+  <stage stageid="691bf6b1-f5ee-4546-a372-6858232b0938" name="Data Items" type="Block">
+    <loginhibit onsuccess="true" />
+    <display x="540" y="-300" w="150" h="450" />
+    <font family="Segoe UI" size="14" style="Regular" color="7FB2E5" />
+  </stage>
+</process>

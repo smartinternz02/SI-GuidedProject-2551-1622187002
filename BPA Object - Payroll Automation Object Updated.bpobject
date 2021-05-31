@@ -1,0 +1,203 @@
+﻿<process name="Payroll Automation Object" version="1.0" bpversion="6.10.1.35171" narrative="" byrefcollection="true" type="object" runmode="Exclusive" preferredid="6b9017ea-2b44-4128-abdd-d927bf75cd24">
+  <appdef>
+    <element name="Payroll Automation Object">
+      <id>11492cfa-c327-4520-ad78-445fff6298b5</id>
+      <group name="Element1">
+        <id>9e8dcdd1-8ea3-4409-9cda-61c48f384a29</id>
+      </group>
+      <type>Application</type>
+      <basetype>Application</basetype>
+      <datatype>unknown</datatype>
+      <diagnose>False</diagnose>
+    </element>
+    <apptypeinfo>
+      <id>Win32Launch</id>
+      <parameters>
+        <parameter>
+          <name>Path</name>
+          <value>C:\Program Files\Microsoft Office\root\Office16\EXCEL.EXE</value>
+        </parameter>
+        <parameter>
+          <name>CommandLineParams</name>
+          <value>
+          </value>
+        </parameter>
+        <parameter>
+          <name>WorkingDirectory</name>
+          <value>C:\Program Files\Microsoft Office\root\Office16</value>
+        </parameter>
+        <parameter>
+          <name>NonInvasive</name>
+          <value>True</value>
+        </parameter>
+        <parameter>
+          <name>ProcessMode</name>
+          <value>Internal</value>
+        </parameter>
+        <parameter>
+          <name>ExternalProcessTimeout</name>
+          <value>0</value>
+        </parameter>
+        <parameter>
+          <name>Options</name>
+          <value>
+          </value>
+        </parameter>
+      </parameters>
+    </apptypeinfo>
+  </appdef>
+  <view>
+    <camerax>0</camerax>
+    <cameray>0</cameray>
+    <zoom version="2">1.25</zoom>
+  </view>
+  <preconditions />
+  <endpoint narrative="" />
+  <subsheet subsheetid="e380ab54-9029-4af6-ae7a-91e3e4d3edd7" type="CleanUp" published="True">
+    <name>Clean Up</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <subsheet subsheetid="b351a8fb-dd6c-4dc3-8cd9-a7456f221641" type="Normal" published="True">
+    <name>Excel Launch</name>
+    <view>
+      <camerax>0</camerax>
+      <cameray>0</cameray>
+      <zoom version="2">1.25</zoom>
+    </view>
+  </subsheet>
+  <stage stageid="3c69304e-711a-4074-b2a2-dbf4ec48a8ce" name="Start" type="Start">
+    <loginhibit />
+    <display x="15" y="-105" />
+    <onsuccess>27844922-3fc8-4283-9f59-38898caf0597</onsuccess>
+  </stage>
+  <stage stageid="27844922-3fc8-4283-9f59-38898caf0597" name="End" type="End">
+    <loginhibit />
+    <display x="15" y="90" />
+  </stage>
+  <stage stageid="0073c04c-998e-4101-82f0-423980dc8d06" name="Stage1" type="ProcessInfo">
+    <display x="-195" y="-105" w="150" h="90" />
+    <references>
+      <reference>System.dll</reference>
+      <reference>System.Data.dll</reference>
+      <reference>System.Xml.dll</reference>
+      <reference>System.Drawing.dll</reference>
+    </references>
+    <imports>
+      <import>System</import>
+      <import>System.Drawing</import>
+      <import>System.Data</import>
+    </imports>
+    <language>visualbasic</language>
+    <globalcode><![CDATA[]]></globalcode>
+    <code><![CDATA[]]></code>
+  </stage>
+  <stage stageid="562e093c-75e4-48c5-8d5d-8238941f680b" name="Clean Up" type="SubSheetInfo">
+    <subsheetid>e380ab54-9029-4af6-ae7a-91e3e4d3edd7</subsheetid>
+    <display x="-195" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="110f1e01-0abb-47e9-894f-864290ba9644" name="Start" type="Start">
+    <subsheetid>e380ab54-9029-4af6-ae7a-91e3e4d3edd7</subsheetid>
+    <loginhibit />
+    <display x="15" y="-105" />
+    <onsuccess>3aa8e1dd-981f-4bae-b291-509da240002c</onsuccess>
+  </stage>
+  <stage stageid="3aa8e1dd-981f-4bae-b291-509da240002c" name="End" type="End">
+    <subsheetid>e380ab54-9029-4af6-ae7a-91e3e4d3edd7</subsheetid>
+    <loginhibit />
+    <display x="15" y="90" />
+  </stage>
+  <stage stageid="267a6ee4-c07e-44e9-b715-5fb3c7460e51" name="Excel Launch" type="SubSheetInfo">
+    <subsheetid>b351a8fb-dd6c-4dc3-8cd9-a7456f221641</subsheetid>
+    <display x="-270" y="-105" w="150" h="90" />
+  </stage>
+  <stage stageid="4e370d54-17a2-4e96-beee-c4d4acb8e046" name="Start" type="Start">
+    <subsheetid>b351a8fb-dd6c-4dc3-8cd9-a7456f221641</subsheetid>
+    <loginhibit />
+    <display x="15" y="-120" />
+    <inputs>
+      <input type="text" name="File path" stage="File path" />
+    </inputs>
+    <onsuccess>01bf46ee-0e2d-4572-a4d1-941f724c1270</onsuccess>
+  </stage>
+  <stage stageid="f91811c3-5f5a-471c-8c4b-2306ff080a6a" name="End" type="End">
+    <subsheetid>b351a8fb-dd6c-4dc3-8cd9-a7456f221641</subsheetid>
+    <loginhibit />
+    <display x="15" y="90" />
+  </stage>
+  <stage stageid="c3a3a011-4bf3-418d-bbc0-ed115ec50cd1" name="" type="Note">
+    <subsheetid>e380ab54-9029-4af6-ae7a-91e3e4d3edd7</subsheetid>
+    <narrative>Clean Up Page
+
+This is an optional page where you might choose to perform some finalisation (or "cleanup") tasks as your business object is closed down.
+
+The cleanup action will be called automatically immediately after closing your business object at the end of a business process.
+
+You will not be able to call this action from a business process, nor will it be called at any other time than before the disposal of the business object.</narrative>
+    <display x="-180" y="60" w="180" h="230" />
+  </stage>
+  <stage stageid="95c4995c-a5a6-46f9-9541-977dbeec236a" name="" type="Note">
+    <narrative>Initialise Page
+
+This is an optional page where you might choose to perform some initialisation tasks after your business object is loaded.
+
+The initialise action will be called automatically immediately after loading your business object.
+
+You will not be able to call this action from a business process, nor will it be called at any other time than after the creation of the object.</narrative>
+    <display x="-180" y="60" w="180" h="230" />
+  </stage>
+  <stage stageid="01bf46ee-0e2d-4572-a4d1-941f724c1270" name="Launch" type="Navigate" interval="3">
+    <subsheetid>b351a8fb-dd6c-4dc3-8cd9-a7456f221641</subsheetid>
+    <loginhibit />
+    <display x="15" y="-30" />
+    <onsuccess>f91811c3-5f5a-471c-8c4b-2306ff080a6a</onsuccess>
+    <step>
+      <element id="11492cfa-c327-4520-ad78-445fff6298b5" />
+      <action>
+        <id>Launch</id>
+        <arguments>
+          <argument>
+            <id>Path</id>
+            <value>
+            </value>
+          </argument>
+          <argument>
+            <id>CommandLineParams</id>
+            <value>[File path]</value>
+          </argument>
+          <argument>
+            <id>WorkingDirectory</id>
+            <value>
+            </value>
+          </argument>
+          <argument>
+            <id>NonInvasive</id>
+            <value>
+            </value>
+          </argument>
+          <argument>
+            <id>ProcessMode</id>
+            <value>
+            </value>
+          </argument>
+          <argument>
+            <id>Options</id>
+            <value>
+            </value>
+          </argument>
+        </arguments>
+      </action>
+    </step>
+  </stage>
+  <stage stageid="bc3ed076-2e29-431e-9416-07a52e2139f4" name="File path" type="Data">
+    <subsheetid>b351a8fb-dd6c-4dc3-8cd9-a7456f221641</subsheetid>
+    <display x="105" y="-120" />
+    <datatype>text</datatype>
+    <initialvalue />
+    <private />
+    <alwaysinit />
+  </stage>
+</process>
